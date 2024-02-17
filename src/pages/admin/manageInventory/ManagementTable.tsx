@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Checkbox, FloatButton, Space, Table } from "antd";
+import { Checkbox, FloatButton, Space, Table } from "antd";
 import type { TableProps } from "antd";
 import SalesModal from "../../../components/ui/SalesModal";
 import UpdateModal from "../../../components/ui/UpdateModal";
@@ -13,9 +13,8 @@ import { useState } from "react";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
-
 import DefaultImg from "../../../assets/defaulPic.png";
-import { DeleteOutlined, LogoutOutlined } from "@ant-design/icons";
+import { DeleteOutlined } from "@ant-design/icons";
 
 interface DataType {
   key: string;
@@ -100,7 +99,7 @@ const ManagementTable = ({
     {
       title: "Details",
       dataIndex: "name",
-      render: (text, record) => (
+      render: (_text, record) => (
         <div className="flex flex-col">
           <span className="font-medium text-lg">{record.name} </span>
           <span>Brand → {record.brand} </span>

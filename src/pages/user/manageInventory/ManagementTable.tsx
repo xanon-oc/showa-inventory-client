@@ -90,7 +90,7 @@ const ManagementTable = ({
     {
       title: "Details",
       dataIndex: "name",
-      render: (text, record) => (
+      render: (_text, record) => (
         <div className="flex flex-col">
           <span className="font-medium text-lg">{record.name} </span>
           <span>Brand → {record.brand} </span>

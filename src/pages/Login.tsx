@@ -8,7 +8,6 @@ import { useAppDispatch } from "../redux/hooks";
 import { TUser, setUser } from "../redux/features/auth/authSlice";
 import { verifyToken } from "../utils/veryfyToken";
 import ImageForPoster from "../assets/domino-164_6wVEHfI-unsplash.jpg";
-import Logo from "../assets/pngwing.com.png";
 
 const Login = () => {
   const [login] = useLoginMutation();

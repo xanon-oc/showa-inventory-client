@@ -54,7 +54,7 @@ const PolishManagement = () => {
     },
     {
       title: <p className="flex justify-center">Status Action</p>,
-      render: (text, record) => (
+      render: (_text, record) => (
         <Space size="large" className="flex justify-end">
           <div className="grid xl:grid-cols-2 md:grid-cols-2 gap-4 ">
             <UpdatePolishStatusModal record={record} />
