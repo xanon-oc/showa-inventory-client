@@ -27,6 +27,7 @@ const PolishManagementTable = () => {
       dataIndex: "userId",
       key: "userId",
       render: (text) => <a>{text}</a>,
+      responsive: ["lg"],
     },
     {
       title: "Status",
@@ -53,6 +54,7 @@ const PolishManagementTable = () => {
       title: "Request Date",
       dataIndex: "requestDate",
       key: "requestDate",
+      responsive: ["lg"],
     },
   ];
 

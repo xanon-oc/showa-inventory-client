@@ -1,14 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Checkbox, FloatButton, Space, Table } from "antd";
+import { Checkbox, FloatButton, Table } from "antd";
 import type { TableProps } from "antd";
-import SalesModal from "../../../components/ui/SalesModal";
-import UpdateModal from "../../../components/ui/UpdateModal";
-import DuplicateModal from "../../../components/ui/DuplicateModal";
-import DeletePopUp from "../../../components/ui/DeletePopUp";
-import {
-  useBulkDeleteMutation,
-  useSingleDeleteMutation,
-} from "../../../redux/features/shoes/shoeApi";
+import { useBulkDeleteMutation } from "../../../redux/features/shoes/shoeApi";
 import { useState } from "react";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { toast } from "sonner";
@@ -39,8 +32,6 @@ const ManagementTable = ({
 }) => {
   const [ids, setIds] = useState<string[]>([]);
 
-  const [singleDelete, { isSuccess: singleDeleteSuccess }] =
-    useSingleDeleteMutation();
   const [deleteBulk, { isSuccess: bulkDeleteSuccess }] =
     useBulkDeleteMutation();
   const shoes = useSelector((state: any) => state.shoe.shoes) || [];
@@ -58,9 +49,6 @@ const ManagementTable = ({
     imageUrl: shoe.imageUrl,
     shoeId: shoe.shoeId,
   }));
-  const handleDelete = (itemId: string) => {
-    singleDelete(itemId);
-  };
 
   const columns: TableProps<DataType>["columns"] = [
     {
@@ -83,7 +71,7 @@ const ManagementTable = ({
           <Checkbox onChange={(e) => onChange(e, record)} />
           {record.imageUrl ? (
             <img
-              className="rounded-lg"
+              className="rounded-lg object-cover"
               src={record.imageUrl}
               alt="Shoe"
               style={{ width: "100px", height: "80px" }}
@@ -174,10 +162,6 @@ const ManagementTable = ({
   const handleBulkDelete = (value: string[]) => {
     deleteBulk(value);
   };
-
-  if (singleDeleteSuccess) {
-    toast.loading("Shoe delete success", { id: 1, duration: 2000 });
-  }
 
   if (bulkDeleteSuccess) {
     toast.success("Bulk delete success", { id: 1, duration: 2000 });

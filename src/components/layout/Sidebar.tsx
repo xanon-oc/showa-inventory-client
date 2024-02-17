@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, FloatButton, Menu } from "antd";
+import { Badge, FloatButton, Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 import { adminPaths } from "../../routes/admin.routes";
@@ -8,17 +8,21 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   TUser,
   logOut,
+  selectCurrentUser,
   useCurrentToken,
 } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/veryfyToken";
 import { TSidebarItem, userRole } from "../../types";
 import { userPaths } from "../../routes/user.routes";
 import { useNavigate } from "react-router-dom";
-import { CustomerServiceOutlined, LogoutOutlined } from "@ant-design/icons";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const token = useAppSelector(useCurrentToken);
+  const { user: currentUser }: any = useSelector(selectCurrentUser);
+  console.log(currentUser.email);
   const dispatch = useAppDispatch();
 
   let user;
@@ -51,7 +55,7 @@ const Sidebar = () => {
       style={{ backgroundColor: "#fff" }}
     >
       <div
-        className="demo-logo-vertical"
+        className="demo-logo-vertical flex flex-col gap-4"
         style={{
           color: "white",
           display: "flex",
@@ -61,6 +65,15 @@ const Sidebar = () => {
         }}
       >
         <img src={Logo} alt="" />
+        <p className="text-black bg-gray-200 p-1 px-2 rounded-xl flex justify-center items-center gap-2">
+          <span className="bg-white py-1 rounded-full px-2">
+            <UserOutlined />
+          </span>
+
+          <Badge count={currentUser?.role} showZero color="#faad14">
+            {currentUser?.email}
+          </Badge>
+        </p>
       </div>
       <Menu
         theme="light"

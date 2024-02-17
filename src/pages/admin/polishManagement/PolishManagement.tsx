@@ -24,6 +24,7 @@ const PolishManagement = () => {
       dataIndex: "userId",
       key: "userId",
       render: (text) => <a>{text}</a>,
+      responsive: ["lg"],
     },
     {
       title: "Status",
@@ -49,9 +50,10 @@ const PolishManagement = () => {
       title: "Request Date",
       dataIndex: "requestDate",
       key: "requestDate",
+      responsive: ["lg"],
     },
     {
-      title: <p className="flex justify-center">Action</p>,
+      title: <p className="flex justify-center">Status Action</p>,
       render: (text, record) => (
         <Space size="large" className="flex justify-end">
           <div className="grid xl:grid-cols-2 md:grid-cols-2 gap-4 ">
@@ -76,7 +78,7 @@ const PolishManagement = () => {
     return 0;
   });
 
-  const data: DataType[] | undefined = sortedData?.map((polish: any) => ({
+  const data: DataType[] | undefined | any = sortedData?.map((polish: any) => ({
     key: polish._id,
     userId: polish.userId,
     polishType: (
@@ -129,7 +131,14 @@ const PolishManagement = () => {
     requestDate: moment(polish.requestDate).format("MMM Do YY , h:mm a"),
   }));
 
-  return <Table columns={columns} dataSource={data} loading={isFetching} />;
+  return (
+    <Table
+      pagination={false}
+      columns={columns}
+      dataSource={data}
+      loading={isFetching}
+    />
+  );
 };
 
 export default PolishManagement;

@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Button, Modal } from "antd";
+import { Button, Modal, Tooltip } from "antd";
 import { Form, Input, Select } from "antd";
 import { polishStatus } from "../../types/polishStatus.type";
 import { useUpdatePolisStatusMutation } from "../../redux/features/shoes/shoeApi";
 import { toast } from "sonner";
+import { EditOutlined } from "@ant-design/icons";
 
 const UpdatePolishStatusModal = ({ record }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,14 +51,14 @@ const UpdatePolishStatusModal = ({ record }: any) => {
 
   return (
     <>
-      <Button
-        onClick={showModal}
-        size="large"
-        className="uppercase font-semibold"
-      >
-        Update Status
-      </Button>
-
+      <Tooltip placement="topLeft" title="Update Polish Status">
+        <Button
+          onClick={showModal}
+          className="bg-green-400 text-white hover:bg-white flex justify-center items-center"
+        >
+          <EditOutlined />
+        </Button>
+      </Tooltip>
       <Modal
         centered
         open={isModalOpen}

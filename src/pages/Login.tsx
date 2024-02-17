@@ -7,6 +7,8 @@ import { toast } from "sonner";
 import { useAppDispatch } from "../redux/hooks";
 import { TUser, setUser } from "../redux/features/auth/authSlice";
 import { verifyToken } from "../utils/veryfyToken";
+import ImageForPoster from "../assets/domino-164_6wVEHfI-unsplash.jpg";
+import Logo from "../assets/pngwing.com.png";
 
 const Login = () => {
   const [login] = useLoginMutation();
@@ -30,7 +32,7 @@ const Login = () => {
         navigate(`/${user.role}/shoes-sales-management`);
       }
       if (user.role === "user") {
-        navigate(`/${user.role}/polish-services`);
+        navigate(`/${user.role}/shoes-sales-management`);
       }
     } catch (error) {
       toast.error("Something went wrong or user not found", { id: toastId });
@@ -43,7 +45,7 @@ const Login = () => {
         <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
           <img
             alt="Night"
-            src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+            src={ImageForPoster}
             className="absolute inset-0 h-full w-full object-cover opacity-80"
           />
 

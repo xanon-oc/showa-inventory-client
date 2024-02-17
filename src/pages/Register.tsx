@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Button, Form, Input, Select } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../redux/features/auth/authApi";
 import { Toaster, toast } from "sonner";
+import ImageForPoster from "../assets/domino-164_6wVEHfI-unsplash.jpg";
 
 const { Option } = Select;
 
@@ -20,25 +20,32 @@ const formItemLayout = {
 
 const Register = () => {
   const [form] = Form.useForm();
-  const [registerUser, { isLoading, isSuccess }] = useRegisterMutation();
+  const [registerUser] = useRegisterMutation();
   const navigate = useNavigate();
-  const onFinish = (values: any) => {
+
+  const onFinish = async (values: any) => {
+    const toastId = toast.loading("Creating user");
     const { name, email, gender, role, password } = values;
     const userRegisterData = { name, email, gender, role, password };
-    registerUser(userRegisterData);
+    try {
+      const result = await registerUser(userRegisterData);
+      if ((result as any)?.data && (result as any)?.data.message) {
+        toast.success((result as any).data.message, { id: toastId });
+        navigate("/login");
+      } else if (
+        (result as any)?.error &&
+        (result as any)?.error.data &&
+        (result as any)?.error.data.errorMessage
+      ) {
+        toast.error((result as any).error.data.errorMessage, { id: toastId });
+      } else {
+        toast.error("Something went wrong", { id: toastId });
+      }
+    } catch (error) {
+      toast.error("Something went wrong", { id: toastId });
+    }
   };
 
-  if (isLoading) {
-    toast.loading("Registering user", { id: 7 });
-  }
-  if (isSuccess) {
-    toast.success("Registration complete", { id: 7 });
-    navigate("/login");
-  }
-  // if (isError) {
-  //   toast.error();
-  // }
-  // console.log(originalArgs);
   return (
     <section className="bg-white">
       <Toaster />
@@ -46,7 +53,7 @@ const Register = () => {
         <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
           <img
             alt="Night"
-            src="https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+            src={ImageForPoster}
             className="absolute inset-0 h-full w-full object-cover opacity-80"
           />
 

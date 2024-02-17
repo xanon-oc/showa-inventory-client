@@ -81,7 +81,7 @@ const ManagementTable = ({
           <Checkbox onChange={(e) => onChange(e, record)} />
           {record.imageUrl ? (
             <img
-              className="rounded-lg"
+              className="rounded-lg object-cover"
               src={record.imageUrl}
               alt="Shoe"
               style={{ width: "100px", height: "80px" }}
