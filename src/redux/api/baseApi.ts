@@ -11,7 +11,7 @@ import { RootState } from "../store";
 import { logOut, setUser } from "../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://showa-inventory-management-app.vercel.app/api",
+  baseUrl: "http://localhost:5000/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -31,13 +31,10 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   if (result?.error?.status === 401) {
     //* send refresh token
     console.log("Sending refresh token");
-    const res = await fetch(
-      "https://showa-inventory-management-app.vercel.app/api/auth/refresh-token",
-      {
-        method: "POST",
-        credentials: "include",
-      }
-    );
+    const res = await fetch("http://localhost:5000/api/auth/refresh-token", {
+      method: "POST",
+      credentials: "include",
+    });
     const data = await res.json();
     if (data?.data?.accessToken) {
       const user = (api.getState() as RootState).auth.user;

@@ -120,6 +120,7 @@ const Login = () => {
                 >
                   <Input
                     prefix={<UserOutlined className="site-form-item-icon" />}
+                    size="large"
                     placeholder="Username or email"
                   />
                 </Form.Item>
@@ -131,13 +132,14 @@ const Login = () => {
                 >
                   <Input
                     prefix={<LockOutlined className="site-form-item-icon" />}
+                    size="large"
                     type="password"
                     placeholder="Password"
                   />
                 </Form.Item>
 
                 <Form.Item>
-                  <div className="flex justify-center items-center gap-4">
+                  <div className="flex justify-center items-center gap-2">
                     <Button
                       type="primary"
                       ghost
@@ -146,8 +148,10 @@ const Login = () => {
                     >
                       Log in
                     </Button>
-                    <p>Or</p>
-                    <Link to="/register">register now!</Link>
+                    Or
+                    <Link className="underline" to="/register">
+                      register now !
+                    </Link>
                   </div>
                 </Form.Item>
               </Form>

@@ -119,7 +119,7 @@ const Register = () => {
               name="register"
               onFinish={onFinish}
               initialValues={{
-                ["role"]: "seller",
+                ["role"]: "user",
               }}
               layout="vertical"
               style={{ width: 400 }}
@@ -137,7 +137,7 @@ const Register = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input size="large" />
               </Form.Item>
               <Form.Item
                 name="email"
@@ -153,7 +153,7 @@ const Register = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input size="large" />
               </Form.Item>
 
               <Form.Item
@@ -161,7 +161,7 @@ const Register = () => {
                 label="Gender"
                 rules={[{ required: true, message: "Please select gender!" }]}
               >
-                <Select placeholder="select your gender">
+                <Select size="large" placeholder="select your gender">
                   <Option value="male">Male</Option>
                   <Option value="female">Female</Option>
                 </Select>
@@ -178,7 +178,7 @@ const Register = () => {
                   ]}
                   hasFeedback
                 >
-                  <Input.Password />
+                  <Input.Password size="large" />
                 </Form.Item>
                 <Form.Item
                   name="confirm"
@@ -204,7 +204,7 @@ const Register = () => {
                     }),
                   ]}
                 >
-                  <Input.Password />
+                  <Input.Password size="large" />
                 </Form.Item>
               </div>
               <Form.Item
@@ -222,6 +222,7 @@ const Register = () => {
               <Form.Item>
                 <div className="">
                   <Button
+                    size="large"
                     type="primary"
                     ghost
                     className="w-full"
@@ -230,9 +231,9 @@ const Register = () => {
                     Register
                   </Button>
                   <div className="mt-3">
-                    <span>Already have a account</span>
-                    <Link className="ml-2" to="/login">
-                      Login now!
+                    <span>Already have a account ?</span>
+                    <Link className="ml-2 underline" to="/login">
+                      Login now !
                     </Link>
                   </div>
                 </div>

@@ -73,33 +73,38 @@ const ManagementHeader = () => {
   };
 
   return (
-    <div>
-      <Space direction="vertical">
-        <Search
-          placeholder="input search text"
-          allowClear
-          enterButton="Search"
-          size="large"
-          onSearch={onSearch}
-          style={{
-            backgroundColor: "#1677ff",
-            color: "white",
-            borderRadius: "7px",
-          }}
-        />
-        <div className="grid lg:grid-cols-12">
-          <div>
+    <Space direction="vertical">
+      <Search
+        placeholder="input search text"
+        allowClear
+        enterButton="Search"
+        size="large"
+        onSearch={onSearch}
+        style={{
+          backgroundColor: "#1677ff",
+          color: "white",
+          borderRadius: "7px",
+        }}
+      />
+      <div className="flex">
+        <Form
+          onFinish={onFinish}
+          form={form}
+          className="grid grid-cols-2 md:grid md:grid-cols-6 gap-4 "
+        >
+          <Button size="large" disabled />
+
+          <div className="flex justify-center items-center h-[40px]">
             <Tooltip title="Min Price">
               <InputNumber
-                min={1}
                 size="large"
+                min={1}
                 value={minPrice}
                 placeholder="min price"
                 onChange={(value) => setMinPrice(value || 1)}
               />
             </Tooltip>
-          </div>
-          <div>
+            <p>-</p>
             <Tooltip title="Max Price">
               <InputNumber
                 size="large"
@@ -109,38 +114,39 @@ const ManagementHeader = () => {
               />
             </Tooltip>
           </div>
-          <Form onFinish={onFinish} form={form} className="flex gap-4">
-            <div className="md:flex md:gap-4">
-              <Form.Item name="styleFromForm">
-                <Select size="large" placeholder="Select Style">
-                  {ShoeStyle.map((shoe, i) => (
-                    <Select.Option key={i} value={shoe}>
-                      {shoe}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-              <Form.Item name="sizeFromForm">
-                <Select size="large" placeholder="Select Size">
-                  {ShoeSize.map((shoe, i) => (
-                    <Select.Option key={i} value={shoe}>
-                      {shoe}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-              <Form.Item name="materialFromForm">
-                <Select size="large" placeholder="Select Material">
-                  {ShoeMaterial.map((shoe, i) => (
-                    <Select.Option key={i} value={shoe}>
-                      {shoe}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </div>
+          <div className="flex flex-col md:flex-row gap-2">
+            <Form.Item name="styleFromForm">
+              <Select size="large" placeholder="Style">
+                {ShoeStyle.map((shoe, i) => (
+                  <Select.Option key={i} value={shoe}>
+                    {shoe}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item name="sizeFromForm">
+              <Select size="large" placeholder="Size">
+                {ShoeSize.map((shoe, i) => (
+                  <Select.Option key={i} value={shoe}>
+                    {shoe}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </div>
+          <div className="flex flex-col md:flex-row gap-2">
+            <Form.Item name="materialFromForm">
+              <Select size="large" placeholder="Material">
+                {ShoeMaterial.map((shoe, i) => (
+                  <Select.Option key={i} value={shoe}>
+                    {shoe}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+
             <Form.Item name="colorFromForm">
-              <Select size="large" placeholder="Select Color">
+              <Select size="large" placeholder="Color">
                 {ShoeColor.map((shoe, i) => (
                   <Select.Option key={i} value={shoe}>
                     {shoe}
@@ -149,21 +155,23 @@ const ManagementHeader = () => {
               </Select>
             </Form.Item>
             <Form.Item>
-              <Button size="large" htmlType="submit">
-                Filter
-              </Button>
-            </Form.Item>{" "}
-            <Button
-              className="ml-2 md:ml-0 mt-2 md:mt-0"
-              size="large"
-              onClick={handleReset}
-            >
-              Reset
-            </Button>
-          </Form>
-        </div>
-      </Space>
-    </div>
+              <div className="flex gap-2">
+                <Button size="large" htmlType="submit">
+                  Filter
+                </Button>{" "}
+                <Button
+                  className="ml-2 md:ml-0 md:mt-0"
+                  size="large"
+                  onClick={handleReset}
+                >
+                  Reset
+                </Button>
+              </div>
+            </Form.Item>
+          </div>
+        </Form>
+      </div>
+    </Space>
   );
 };
 

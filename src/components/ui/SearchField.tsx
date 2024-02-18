@@ -87,28 +87,25 @@ const SearchField = () => {
           borderRadius: "7px",
         }}
       />
-      <div className="grid lg:grid-cols-6 gap-4">
-        <AddShoeModal />
-        <Button
-          className="ml-2 md:ml-0 mt-2 md:mt-0"
-          size="large"
-          onClick={handleReset}
+      <div className="flex">
+        <Form
+          onFinish={onFinish}
+          form={form}
+          className="grid grid-cols-2 md:grid md:grid-cols-5 gap-4 "
         >
-          Reset
-        </Button>
-        <div className="flex justify-center gap-2">
-          <div>
+          <AddShoeModal />
+
+          <div className="flex justify-center items-center h-[40px]">
             <Tooltip title="Min Price">
               <InputNumber
-                min={1}
                 size="large"
+                min={1}
                 value={minPrice}
                 placeholder="min price"
                 onChange={(value) => setMinPrice(value || 1)}
               />
             </Tooltip>
-          </div>
-          <div>
+            <p>-</p>
             <Tooltip title="Max Price">
               <InputNumber
                 size="large"
@@ -118,11 +115,9 @@ const SearchField = () => {
               />
             </Tooltip>
           </div>
-        </div>
-        <Form onFinish={onFinish} form={form} className="flex gap-4">
-          <div className="md:flex md:gap-4">
+          <div className="flex flex-col md:flex-row gap-2">
             <Form.Item name="styleFromForm">
-              <Select size="large" placeholder="Select Style">
+              <Select size="large" placeholder="Style">
                 {ShoeStyle.map((shoe, i) => (
                   <Select.Option key={i} value={shoe}>
                     {shoe}
@@ -131,7 +126,7 @@ const SearchField = () => {
               </Select>
             </Form.Item>
             <Form.Item name="sizeFromForm">
-              <Select size="large" placeholder="Select Size">
+              <Select size="large" placeholder="Size">
                 {ShoeSize.map((shoe, i) => (
                   <Select.Option key={i} value={shoe}>
                     {shoe}
@@ -139,8 +134,10 @@ const SearchField = () => {
                 ))}
               </Select>
             </Form.Item>
+          </div>
+          <div className="flex flex-col md:flex-row gap-2">
             <Form.Item name="materialFromForm">
-              <Select size="large" placeholder="Select Material">
+              <Select size="large" placeholder="Material">
                 {ShoeMaterial.map((shoe, i) => (
                   <Select.Option key={i} value={shoe}>
                     {shoe}
@@ -148,22 +145,31 @@ const SearchField = () => {
                 ))}
               </Select>
             </Form.Item>
-          </div>
-          <Form.Item name="colorFromForm">
-            <Select size="large" placeholder="Select Color">
-              {ShoeColor.map((shoe, i) => (
-                <Select.Option key={i} value={shoe}>
-                  {shoe}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
 
-          <Form.Item>
-            <Button size="large" htmlType="submit">
-              Filter
-            </Button>
-          </Form.Item>
+            <Form.Item name="colorFromForm">
+              <Select size="large" placeholder="Color">
+                {ShoeColor.map((shoe, i) => (
+                  <Select.Option key={i} value={shoe}>
+                    {shoe}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item>
+              <div className="flex gap-2">
+                <Button size="large" htmlType="submit">
+                  Filter
+                </Button>{" "}
+                <Button
+                  className="ml-2 md:ml-0 md:mt-0"
+                  size="large"
+                  onClick={handleReset}
+                >
+                  Reset
+                </Button>
+              </div>
+            </Form.Item>
+          </div>
         </Form>
       </div>
     </Space>

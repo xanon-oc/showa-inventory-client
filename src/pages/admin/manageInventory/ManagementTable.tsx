@@ -131,10 +131,12 @@ const ManagementTable = ({
           <span className="font-semibold">{text}</span>
         </p>
       ),
+      responsive: ["md"],
     },
     {
       title: "Style",
       dataIndex: "style",
+      responsive: ["md"],
     },
     {
       title: "Color",
@@ -163,6 +165,7 @@ const ManagementTable = ({
           </div>
         </Space>
       ),
+      responsive: ["md"],
     },
   ];
 

@@ -48,6 +48,7 @@ const PolishManagementTable = () => {
       title: "Instructions",
       dataIndex: "instructions",
       key: "instructions",
+      responsive: ["sm"],
     },
 
     {

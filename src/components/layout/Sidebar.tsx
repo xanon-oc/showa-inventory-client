@@ -50,7 +50,7 @@ const Sidebar = () => {
   };
   return (
     <Sider
-      breakpoint="lg"
+      breakpoint="xl"
       collapsedWidth="0"
       style={{ backgroundColor: "#fff" }}
     >

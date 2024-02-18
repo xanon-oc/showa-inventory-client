@@ -39,11 +39,13 @@ const PolishManagement = () => {
       title: "Shine Level",
       dataIndex: "shineLevel",
       key: "shineLevel",
+      responsive: ["sm"],
     },
     {
       title: "Instructions",
       dataIndex: "instructions",
       key: "instructions",
+      responsive: ["sm"],
     },
 
     {
