@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Checkbox, FloatButton, Table } from "antd";
+import { FloatButton, Table } from "antd";
 import type { TableProps } from "antd";
 import { useBulkDeleteMutation } from "../../../redux/features/shoes/shoeApi";
 import { useState } from "react";
@@ -68,7 +68,6 @@ const ManagementTable = ({
       dataIndex: "select",
       render: (_text, record) => (
         <div className="flex justify-center items-center gap-2">
-          <Checkbox onChange={(e) => onChange(e, record)} />
           {record.imageUrl ? (
             <img
               className="rounded-lg object-cover"
