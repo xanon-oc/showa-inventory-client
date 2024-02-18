@@ -23,10 +23,17 @@ const DuplicateModal = ({ record }: { record: any }) => {
   };
 
   const handleOk = () => {
+    const toastId = toast.loading("Creating product");
     form
       .validateFields()
       .then((values) => {
         uploadShoe(values);
+        if (isLoading) {
+          toast.loading("Uploading shoe data", { id: toastId });
+        }
+        if (isSuccess) {
+          toast.success("Shoe data uploaded", { id: toastId, duration: 2000 });
+        }
         setIsModalOpen(false);
       })
       .catch((errorInfo) => {
@@ -37,12 +44,6 @@ const DuplicateModal = ({ record }: { record: any }) => {
     setIsModalOpen(false);
   };
 
-  if (isLoading) {
-    toast.loading("Uploading shoe data", { id: 3 });
-  }
-  if (isSuccess) {
-    toast.success("Shoe data uploaded", { id: 3, duration: 2000 });
-  }
   return (
     <>
       <Tooltip placement="topLeft" title="Duplicate and edit">

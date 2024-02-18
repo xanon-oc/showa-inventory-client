@@ -22,11 +22,18 @@ const UpdateModal = ({ record }: { record: any }) => {
   };
 
   const handleOk = () => {
+    const toastId = toast.loading("Updating");
     form
       .validateFields()
       .then((values) => {
         const options = { id: record.key, data: values };
         updateShoeData(options);
+        if (isLoading) {
+          toast.loading("Updating shoe data", { id: toastId });
+        }
+        if (isSuccess) {
+          toast.success("Shoe data Updating", { id: toastId, duration: 2000 });
+        }
         setIsModalOpen(false);
       })
       .catch((errorInfo) => {
@@ -36,12 +43,7 @@ const UpdateModal = ({ record }: { record: any }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  if (isLoading) {
-    toast.loading("Updating shoe data", { id: 8 });
-  }
-  if (isSuccess) {
-    toast.success("Shoe data Updating", { id: 8, duration: 2000 });
-  }
+
   return (
     <>
       <Tooltip placement="topLeft" title="Update the shoe">
