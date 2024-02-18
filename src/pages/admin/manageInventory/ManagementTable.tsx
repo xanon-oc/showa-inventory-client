@@ -186,7 +186,7 @@ const ManagementTable = ({
   };
 
   if (singleDeleteSuccess) {
-    toast.loading("Shoe delete success", { id: 1, duration: 2000 });
+    toast.success("Shoe delete success", { id: 1, duration: 2000 });
   }
 
   if (bulkDeleteSuccess) {
