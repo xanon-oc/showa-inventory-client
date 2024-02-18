@@ -19,23 +19,19 @@ const UpdatePolishStatusModal = ({ record }: any) => {
   const handleOk = async () => {
     try {
       await form.validateFields();
-      const toastId = toast.loading("Uploading");
+      const toastId = toast.loading("Updating");
       const values = form.getFieldsValue();
       const data = {
         _id: values._id,
         status: values.status,
       };
 
-      const result: any = await uploadPolishStatus(data);
-
-      if (result?.data?.success) {
-        toast.success(result.data.message, { id: toastId, duration: 2000 });
-      }
-
-      if (result?.error) {
-        toast.error(result.error.data.errorMessage, {
+      const response: any = await uploadPolishStatus(data);
+      if ((response as any).data?.success === true) {
+        toast.success("Product status updated successfully", { id: toastId });
+      } else if ((response as any)?.error) {
+        toast.error((response as any).error.data.errorMessage, {
           id: toastId,
-          duration: 2000,
         });
       }
 

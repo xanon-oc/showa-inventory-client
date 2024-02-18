@@ -17,39 +17,33 @@ const AddPolishServiceModal = () => {
 
   const [form] = Form.useForm();
 
-  const [uploadShoePolishService, { isLoading }] =
-    useAddShoePolishServiceMutation();
+  const [uploadShoePolishService] = useAddShoePolishServiceMutation();
   const currentUser = useAppSelector(selectCurrentUser);
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  if (isLoading) {
-    toast.loading("Uploading shoe polish request data", { id: 3 });
-  }
-
   const handleOk = async () => {
+    const toastId = toast.loading("Adding polish request");
     try {
       await form.validateFields();
-      const values = form.getFieldsValue();
       const preferences = {
-        userId: values.userId,
+        userId: form.getFieldValue("userId"),
         preferences: {
-          polishType: values.polishType,
-          shineLevel: values.shineLevel,
-          instructions: values.instructions,
+          polishType: form.getFieldValue("polishType"),
+          shineLevel: form.getFieldValue("shineLevel"),
+          instructions: form.getFieldValue("instructions"),
         },
       };
 
-      const result: any = await uploadShoePolishService(preferences);
-
-      if (result?.data?.success) {
-        toast.success(result.data.message, { id: 3, duration: 2000 });
-      }
-
-      if (result?.error) {
-        toast.error(result.error.data.message, { id: 3, duration: 2000 });
+      const response: any = await uploadShoePolishService(preferences);
+      if ((response as any).data?.success === true) {
+        toast.success((response as any).data?.message, { id: toastId });
+      } else if ((response as any)?.error) {
+        toast.error((response as any).error.data.errorMessage, {
+          id: toastId,
+        });
       }
 
       setIsModalOpen(false);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button, Modal, Tooltip } from "antd";
 import { Form, Input, InputNumber, Select } from "antd";
@@ -15,31 +16,36 @@ const UpdateModal = ({ record }: { record: any }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
 
-  const [updateShoeData, { isLoading, isSuccess }] = useUpdateShoeMutation();
+  const [updateShoeData] = useUpdateShoeMutation();
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
     const toastId = toast.loading("Updating");
-    form
-      .validateFields()
-      .then((values) => {
-        const options = { id: record.key, data: values };
-        updateShoeData(options);
-        if (isLoading) {
-          toast.loading("Updating shoe data", { id: toastId });
-        }
-        if (isSuccess) {
-          toast.success("Shoe data Updating", { id: toastId, duration: 2000 });
-        }
-        setIsModalOpen(false);
-      })
-      .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
-      });
+    try {
+      const values = await form.validateFields();
+      const options = { id: record.key, data: values };
+      const response = await updateShoeData(options);
+
+      if ((response as any).data.success === true) {
+        toast.success("Product updated successfully", { id: toastId });
+      } else if (
+        (response as any)?.error &&
+        (response as any)?.error.data &&
+        (response as any)?.error.data.errorMessage
+      ) {
+        toast.error((response as any).error.data.errorMessage, {
+          id: toastId,
+        });
+      }
+      setIsModalOpen(false);
+    } catch (errorInfo) {
+      console.log("Validation failed:", errorInfo);
+    }
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };

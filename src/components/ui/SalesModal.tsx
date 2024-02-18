@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button, Modal, Tooltip } from "antd";
 import { DatePicker, Form, Input, InputNumber } from "antd";
@@ -8,30 +9,31 @@ import { toast } from "sonner";
 const SalesModal = ({ itemId }: { itemId: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
-  const [uploadSale, { isLoading, isSuccess }] = useAddShoeToSaleMutation();
+  const [uploadSale] = useAddShoeToSaleMutation();
 
   const showModal = () => {
     setIsModalOpen(true);
   };
-
-  const handleOk = () => {
+  const handleOk = async () => {
     const toastId = toast.loading("Adding sale");
-    form
-      .validateFields()
-      .then((values) => {
-        uploadSale(values);
-        if (isLoading) {
-          toast.loading("Adding shoe to sale", { id: toastId });
-        }
-        if (isSuccess) {
-          toast.success("Shoe added to sale", { id: toastId, duration: 2000 });
-        }
-        setIsModalOpen(false);
-      })
-      .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
-      });
+    try {
+      const values = await form.validateFields();
+      const response = await uploadSale(values);
+
+      if ((response as any).data.success === true) {
+        toast.success("Product added to sale successfully", { id: toastId });
+      } else if ((response as any)?.error) {
+        toast.error((response as any).error.data.errorMessage, {
+          id: toastId,
+        });
+      }
+
+      setIsModalOpen(false);
+    } catch (errorInfo) {
+      console.log("Validation failed:", errorInfo);
+    }
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };

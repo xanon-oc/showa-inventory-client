@@ -28,24 +28,25 @@ interface DataType {
   material: string;
   imageUrl: string;
 }
+interface IManagementTableProps {
+  showHeader: boolean;
+  toggleHeaderVisibility: any;
+}
+
 const ManagementTable = ({
   showHeader,
   toggleHeaderVisibility,
-}: {
-  showHeader: boolean;
-  toggleHeaderVisibility: any;
-}) => {
+}: IManagementTableProps) => {
   const [ids, setIds] = useState<string[]>([]);
 
-  const [singleDelete, { isSuccess: singleDeleteSuccess }] =
-    useSingleDeleteMutation();
-  const [deleteBulk, { isSuccess: bulkDeleteSuccess }] =
-    useBulkDeleteMutation();
+  const [singleDelete] = useSingleDeleteMutation();
+  const [deleteBulk] = useBulkDeleteMutation();
   const shoes = useSelector((state: any) => state.shoe.shoes) || [];
 
   const data: DataType[] = shoes?.data?.result?.map((shoe: any) => ({
     key: shoe._id,
     name: shoe.name,
+    model: shoe.model,
     price: shoe.price,
     quantity: shoe.quantity,
     brand: shoe.brand,
@@ -55,8 +56,19 @@ const ManagementTable = ({
     material: shoe.material,
     imageUrl: shoe.imageUrl,
   }));
-  const handleDelete = (itemId: string) => {
-    singleDelete(itemId);
+  const handleDelete = async (itemId: string) => {
+    const toastId = toast.loading("Deleting Product");
+    const response = await singleDelete(itemId);
+
+    if ((response as any).data.success === true) {
+      toast.success("Product deleted successfully", { id: toastId });
+    } else if (
+      (response as any)?.error &&
+      (response as any)?.error.data &&
+      (response as any)?.error.data.errorMessage
+    ) {
+      toast.error((response as any).error.data.errorMessage, { id: toastId });
+    }
   };
 
   const columns: TableProps<DataType>["columns"] = [
@@ -181,17 +193,19 @@ const ManagementTable = ({
     }
   };
 
-  const handleBulkDelete = (value: string[]) => {
-    deleteBulk(value);
+  const handleBulkDelete = async (value: string[]) => {
+    const toastId = toast.loading("Deleting Multiple Items");
+    const response = await deleteBulk(value);
+    if ((response as any).data.success === true) {
+      toast.success("Product deleted successfully", { id: toastId });
+    } else if (
+      (response as any)?.error &&
+      (response as any)?.error.data &&
+      (response as any)?.error.data.errorMessage
+    ) {
+      toast.error((response as any).error.data.errorMessage, { id: toastId });
+    }
   };
-
-  if (singleDeleteSuccess) {
-    toast.success("Shoe delete success", { id: 1, duration: 2000 });
-  }
-
-  if (bulkDeleteSuccess) {
-    toast.success("Bulk delete success", { id: 1, duration: 2000 });
-  }
 
   return (
     <>

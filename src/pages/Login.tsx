@@ -25,7 +25,6 @@ const Login = () => {
       dispatch(setUser({ user: { user: user }, token: res.data.token }));
       toast.success(`Welcome to dashboard ${user.role}`, {
         id: toastId,
-        duration: 2000,
       });
       if (user.role === "seller") {
         navigate(`/${user.role}/shoes-sales-management`);

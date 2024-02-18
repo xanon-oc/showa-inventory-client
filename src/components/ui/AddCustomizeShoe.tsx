@@ -17,19 +17,15 @@ const AddCustomizeShoe = () => {
 
   const [form] = Form.useForm();
 
-  const [uploadShoePolishService, { isLoading }] =
-    useAddShoePolishServiceMutation();
+  const [uploadShoePolishService] = useAddShoePolishServiceMutation();
   const currentUser = useAppSelector(selectCurrentUser);
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  if (isLoading) {
-    toast.loading("Uploading shoe polish request data", { id: 3 });
-  }
-
   const handleOk = async () => {
+    const toastId = toast.loading("Adding custom Design");
     try {
       await form.validateFields();
       const values = form.getFieldsValue();
@@ -45,11 +41,11 @@ const AddCustomizeShoe = () => {
       const result: any = await uploadShoePolishService(preferences);
 
       if (result?.data?.success) {
-        toast.success(result.data.message, { id: 3, duration: 2000 });
+        toast.success(result.data.message, { id: toastId });
       }
 
       if (result?.error) {
-        toast.error(result.error.data.message, { id: 3, duration: 2000 });
+        toast.error(result.error.data.message, { id: toastId });
       }
 
       setIsModalOpen(false);

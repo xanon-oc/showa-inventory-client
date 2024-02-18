@@ -16,30 +16,32 @@ const DuplicateModal = ({ record }: { record: any }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
 
-  const [uploadShoe, { isLoading, isSuccess }] = useAddShoeMutation();
+  const [uploadShoe] = useAddShoeMutation();
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
     const toastId = toast.loading("Creating product");
-    form
-      .validateFields()
-      .then((values) => {
-        uploadShoe(values);
-        if (isLoading) {
-          toast.loading("Uploading shoe data", { id: toastId });
-        }
-        if (isSuccess) {
-          toast.success("Shoe data uploaded", { id: toastId, duration: 2000 });
-        }
-        setIsModalOpen(false);
-      })
-      .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
-      });
+    try {
+      const values = await form.validateFields();
+      const response = await uploadShoe(values);
+      if ((response as any).data.success === true) {
+        toast.success("Product created successfully", { id: toastId });
+      } else if (
+        (response as any).error &&
+        (response as any).error.data &&
+        (response as any).error.data.errorMessage
+      ) {
+        toast.error((response as any).error.data.errorMessage, { id: toastId });
+      }
+      setIsModalOpen(false);
+    } catch (errorInfo) {
+      console.log("Validation failed:", errorInfo);
+    }
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -115,6 +117,7 @@ const DuplicateModal = ({ record }: { record: any }) => {
               <Form.Item label="Brand" name="brand">
                 <Input />
               </Form.Item>
+
               <Form.Item label="Model" name="model">
                 <Input />
               </Form.Item>
