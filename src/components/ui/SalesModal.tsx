@@ -15,10 +15,17 @@ const SalesModal = ({ itemId }: { itemId: string }) => {
   };
 
   const handleOk = () => {
+    const toastId = toast.loading("Adding sale");
     form
       .validateFields()
       .then((values) => {
         uploadSale(values);
+        if (isLoading) {
+          toast.loading("Adding shoe to sale", { id: toastId });
+        }
+        if (isSuccess) {
+          toast.success("Shoe added to sale", { id: toastId, duration: 2000 });
+        }
         setIsModalOpen(false);
       })
       .catch((errorInfo) => {
@@ -29,12 +36,6 @@ const SalesModal = ({ itemId }: { itemId: string }) => {
     setIsModalOpen(false);
   };
 
-  if (isLoading) {
-    toast.loading("Adding shoe to sale", { id: 9 });
-  }
-  if (isSuccess) {
-    toast.success("Shoe added to sale", { id: 9, duration: 2000 });
-  }
   return (
     <>
       <Tooltip placement="topLeft" title="Sale the shoe">

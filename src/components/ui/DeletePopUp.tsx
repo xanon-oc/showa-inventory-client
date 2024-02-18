@@ -18,7 +18,6 @@ const DeletePopUp = ({
       okText="Yes"
       title="Delete the task"
       description="Are you sure to delete this task?"
-      // onConfirm={confirm}
       onCancel={cancel}
       okButtonProps={{
         style: { backgroundColor: "#f5222d", color: "white" },
