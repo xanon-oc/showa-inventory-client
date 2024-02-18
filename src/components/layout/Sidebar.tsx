@@ -22,7 +22,6 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const token = useAppSelector(useCurrentToken);
   const { user: currentUser }: any = useSelector(selectCurrentUser);
-  console.log(currentUser.email);
   const dispatch = useAppDispatch();
 
   let user;

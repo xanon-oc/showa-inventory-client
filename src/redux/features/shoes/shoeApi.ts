@@ -61,7 +61,6 @@ const shoeApi = baseApi.injectEndpoints({
     }),
     updatePolisStatus: builder.mutation({
       query: (data) => {
-        console.log("inside api", data);
         return {
           url: `/shoe-polish/updateShoePolishRequest/${data._id}`,
           method: "PUT",

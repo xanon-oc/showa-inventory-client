@@ -84,8 +84,6 @@ const SalesHistoryTable = ({
     }));
   }
 
-  console.log(state);
-
   return (
     <Table
       scroll={{ y: 360 }}

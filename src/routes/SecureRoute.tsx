@@ -6,7 +6,6 @@ import { TUser } from "../redux/features/auth/authSlice";
 
 const SecureRoute = ({ children }: { children: ReactNode }) => {
   const user: TUser = useSelector((state: any) => state?.auth?.user?.user);
-  console.log(user?.role);
   if (user?.role === "seller" || user?.role === "user") {
     return children;
   }
