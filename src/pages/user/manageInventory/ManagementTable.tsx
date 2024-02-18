@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FloatButton, Table } from "antd";
+import { Table } from "antd";
 import type { TableProps } from "antd";
-import { useBulkDeleteMutation } from "../../../redux/features/shoes/shoeApi";
-import { useState } from "react";
-import { CheckboxChangeEvent } from "antd/es/checkbox";
-import { toast } from "sonner";
 import { useSelector } from "react-redux";
 
 import DefaultImg from "../../../assets/defaulPic.png";
-import { DeleteOutlined } from "@ant-design/icons";
 
 interface DataType {
   key: string;
@@ -30,10 +25,6 @@ const ManagementTable = ({
   showHeader: boolean;
   toggleHeaderVisibility: any;
 }) => {
-  const [ids, setIds] = useState<string[]>([]);
-
-  const [deleteBulk, { isSuccess: bulkDeleteSuccess }] =
-    useBulkDeleteMutation();
   const shoes = useSelector((state: any) => state.shoe.shoes) || [];
 
   const data: DataType[] = shoes?.data?.result?.map((shoe: any) => ({
@@ -146,26 +137,6 @@ const ManagementTable = ({
     },
   ];
 
-  const onChange = (e: CheckboxChangeEvent, record: Record<string, any>) => {
-    const selectedId = record.key;
-
-    if (e.target.checked) {
-      if (!ids.includes(selectedId)) {
-        setIds([...ids, selectedId]);
-      }
-    } else {
-      setIds(ids.filter((id) => id !== selectedId));
-    }
-  };
-
-  const handleBulkDelete = (value: string[]) => {
-    deleteBulk(value);
-  };
-
-  if (bulkDeleteSuccess) {
-    toast.success("Bulk delete success", { id: 1, duration: 2000 });
-  }
-
   return (
     <>
       <Table
@@ -174,18 +145,6 @@ const ManagementTable = ({
         dataSource={data}
         pagination={false}
       />
-      <div className="flex py-2">
-        {ids.length > 0 && (
-          <FloatButton
-            onClick={() => handleBulkDelete(ids)}
-            shape="square"
-            tooltip={<div>BULK DELETE</div>}
-            style={{ right: 80, bottom: 15 }}
-            icon={<DeleteOutlined style={{ color: "black" }} />}
-            className="hover:bg-white"
-          />
-        )}
-      </div>
     </>
   );
 };
