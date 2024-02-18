@@ -28,6 +28,14 @@ Welcome to the Shoes Management Dashboard! This application is designed to help 
 
 - Filter shoes based on various criteria, including price range, release date, brand, model, style, size, color, and additional relevant parameters.
 
+### Polish Request
+
+- User can request polish request for their shoes and admin can approve and give status to the request so, that user can tract the activity.
+
+### Product Verification
+
+- User can search by product id to check the product authenticity if the product is real or fake.
+
 ### User Interface Features
 
 - Real-time UI updates for changes in product inventory and sales.
@@ -64,7 +72,7 @@ Welcome to the Shoes Management Dashboard! This application is designed to help 
 2. Navigate to the project directory:
 
    ```bash
-   cd assignment_5_client
+   cd assignment_6_client
    ```
 
 3. Install dependencies:
